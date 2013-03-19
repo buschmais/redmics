@@ -1,6 +1,8 @@
 = redmine_ics_export (redmics)
 
-ICalendar (ICS) view of issue- and version-deadlines.
+Plug-in for Redmine (http://www.redmine.org/) to export project issues and versions as ICalendar (ICS) files.
+
+This plug-in requires Redmine 2.x.
 
 == Licence
 
@@ -10,6 +12,9 @@ GPL v2
 
 This plug-in requires icalendar 1.1.6 (http://icalendar.rubyforge.org/).
 
-== Implementation details
+== Installation
 
-http://code.google.com/p/redmics/w/list
+* <tt>cd /opt/redmine/plugins</tt>
+* <tt>git clone https://github.com/buschmais/redmics.git</tt>
+* <tt>cd /opt/redmine</tt>
+* <tt>bundle install --without development test</tt>
