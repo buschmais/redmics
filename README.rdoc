@@ -19,5 +19,7 @@ This plug-in requires icalendar 1.1.6 (http://icalendar.rubyforge.org/).
    cd /opt/redmine
    bundle install --without development test
 
+The plug-in directory has to be "redmine_ics_export" - otherwise Redmine will show a 404 page when opening the ticket list. 
+
 Please *do* *not* install the plug-in neither into +redmine/lib/plugins+ nor into +redmine/vendor/plugins+. 
 This is not supported and may cause issues with your Redmine installation.
