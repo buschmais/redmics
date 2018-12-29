@@ -16,10 +16,23 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 module ApplicationControllerFindCurrentUserICS
+
+  module PrependMethods
+    def find_current_user
+      find_current_user_with_ics
+      super
+    end
+  end
+
   def self.included(base)
     base.class_eval {
       include InstanceMethods
-      alias_method_chain :find_current_user, :ics
+      if self.respond_to?(:alias_method_chain)
+        alias_method_chain :find_current_user, :ics
+      else
+        alias_method :find_current_user_without_ics, :find_current_user
+        prepend PrependMethods
+      end
     }
   end
 
@@ -36,10 +49,22 @@ module ApplicationControllerFindCurrentUserICS
 end
 
 module SettingsControllerPluginDefaults
+
+  module PrependMethods
+    def plugin
+      plugin_with_defaults
+    end
+  end
+
   def self.included(base)
     base.class_eval {
       include InstanceMethods
-      alias_method_chain :plugin, :defaults
+      if self.respond_to?(:alias_method_chain)
+        alias_method_chain :plugin, :defaults
+      else
+        alias_method :plugin_without_defaults, :plugin
+        prepend PrependMethods
+      end
     }
   end
 
