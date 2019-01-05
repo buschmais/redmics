@@ -231,9 +231,9 @@ module Redmics
       start_date, due_date = issue_period(issue)
       return [] if start_date.nil? || due_date.nil?
       event = Icalendar::Event.new
-      event.dtstart         start_date, {'VALUE' => 'DATE'}
-      event.dtend           due_date + 1, {'VALUE' => 'DATE'}
-      event.uid             "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
+      event.dtstart = Icalendar::Values::Date.new(start_date)
+      event.dtend = Icalendar::Values::Date.new(due_date + 1)
+      event.uid = "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
       return [event]
     end
 
@@ -241,9 +241,9 @@ module Redmics
       due_date = issue_period(issue)[1]
       return [] if due_date.nil?
       event = Icalendar::Event.new
-      event.dtstart         due_date, {'VALUE' => 'DATE'}
-      event.dtend           due_date + 1, {'VALUE' => 'DATE'}
-      event.uid             "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
+      event.dtstart = Icalendar::Values::Date.new(due_date)
+      event.dtend = Icalendar::Values::Date.new(due_date + 1)
+      event.uid = "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
       return [event]
     end
 
@@ -253,27 +253,27 @@ module Redmics
         return []
       elsif start_date == due_date
         event = Icalendar::Event.new
-        event.dtstart       start_date, {'VALUE' => 'DATE'}
-        event.dtend         start_date + 1, {'VALUE' => 'DATE'}
-        event.summary       "<> #{issue.subject}"
-        event.uid           "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
+        event.dtstart = Icalendar::Values::Date.new(start_date)
+        event.dtend = Icalendar::Values::Date.new(start_date + 1)
+        event.summary = "<> #{issue.subject}"
+        event.uid = "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
         return [event]
       end
       result = []
       unless start_date.nil?
         event = Icalendar::Event.new
-        event.dtstart       start_date, {'VALUE' => 'DATE'}
-        event.dtend         start_date + 1, {'VALUE' => 'DATE'}
-        event.summary       "> #{issue.subject}"
-        event.uid           "id:redmics:project:#{issue.project_id}:issue:#{issue.id}:s@#{Setting.host_name}"
+        event.dtstart = Icalendar::Values::Date.new(start_date)
+        event.dtend = Icalendar::Values::Date.new(start_date + 1)
+        event.summary = "> #{issue.subject}"
+        event.uid = "id:redmics:project:#{issue.project_id}:issue:#{issue.id}:s@#{Setting.host_name}"
         result << event
       end
       unless due_date.nil?
         event = Icalendar::Event.new
-        event.dtstart       due_date, {'VALUE' => 'DATE'}
-        event.dtend         due_date + 1, {'VALUE' => 'DATE'}
-        event.summary       "< #{issue.subject}"
-        event.uid           "id:redmics:project:#{issue.project_id}:issue:#{issue.id}:e@#{Setting.host_name}"
+        event.dtstart = Icalendar::Values::Date.new(due_date)
+        event.dtend = Icalendar::Values::Date.new(due_date + 1)
+        event.summary = "< #{issue.subject}"
+        event.uid = "id:redmics:project:#{issue.project_id}:issue:#{issue.id}:e@#{Setting.host_name}"
         result << event
       end
       return result
@@ -283,27 +283,27 @@ module Redmics
       start_date, due_date = issue_period(issue)
       todo = Icalendar::Todo.new
       unless start_date.nil?
-        todo.dtstart        start_date, {'VALUE' => 'DATE'}
+        todo.dtstart = Icalendar::Values::Date.new(start_date)
       end
       unless due_date.nil?
-        todo.due            due_date, {'VALUE' => 'DATE'}
+        todo.due = Icalendar::Values::Date.new(due_date)
       end
-      todo.uid              "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
+      todo.uid = "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
       return [todo]
     end
 
     def apply_issue_common_properties(issue, result)
       result.each { |event|
-        event.summary       "#{issue.subject}" unless event.summary
-        event.priority      map_priority issue.priority.position
-        event.created       issue.created_on.to_date, {'VALUE' => 'DATE'}
-        event.last_modified issue.updated_on.to_datetime unless issue.updated_on.nil?
-        event.description   issue.description unless issue.description.nil?
-        event.add_category  @controller.l(:label_issue).upcase
-        event.add_contact   issue.assigned_to.name, {"ALTREP" => issue.assigned_to.mail} unless issue.assigned_to.nil?
-        event.organizer     "mailto:#{issue.author.mail}", {"CN" => issue.author.name}
-        event.url           @controller.url_for(:controller => 'issues', :action => 'show', :id => issue.id)
-        event.sequence      issue.lock_version
+        event.summary = "#{issue.subject}" unless event.summary
+        event.priority = map_priority issue.priority.position
+        event.created = Icalendar::Values::Date.new(issue.created_on)
+        event.last_modified = issue.updated_on.to_datetime unless issue.updated_on.nil?
+        event.description = issue.description unless issue.description.nil?
+        event.categories = [@controller.l(:label_issue).upcase]
+        event.contact = %w(issue.assigned_to.name, {"ALTREP" => issue.assigned_to.mail}) unless issue.assigned_to.nil?
+        event.organizer = "mailto:#{issue.author.mail}", {"CN" => issue.author.name}
+        event.url = @controller.url_for(:controller => 'issues', :action => 'show', :id => issue.id)
+        event.sequence = issue.lock_version
       }
     end
 
@@ -311,29 +311,29 @@ module Redmics
       if !result.empty?
         alarm_trigger = @alarm # strange but seems to be required
         result.last.alarm { |alarm|
-          alarm.description "This is an event reminder"
-          alarm.trigger     alarm_trigger
+          alarm.description = "This is an event reminder"
+          alarm.trigger = alarm_trigger
         }
       end
     end
 
     def apply_issue_event_properties(issue, result)
       result.each { |event|
-        event.status        issue.assigned_to ? "CONFIRMED" : "TENTATIVE" unless issue.closed?
+        event.status = issue.assigned_to ? "CONFIRMED" : "TENTATIVE" unless issue.closed?
       }
     end
 
     def apply_issue_todo_properties(issue, result)
       result.each { |todo|
         if issue.closed?
-          todo.status       "COMPLETED"
-          todo.completed    issue.updated_on.to_datetime
-          todo.percent      100
+          todo.status = "COMPLETED"
+          todo.completed = issue.updated_on.to_datetime
+          todo.percent = 100
         elsif issue.assigned_to
-          todo.status       "IN-PROCESS"
-          todo.percent      issue.done_ratio ? issue.done_ratio.to_i : 0
+          todo.status = "IN-PROCESS"
+          todo.percent = issue.done_ratio ? issue.done_ratio.to_i : 0
         else
-          todo.status       "NEEDS-ACTION"
+          todo.status = "NEEDS-ACTION"
         end
       }
     end
@@ -342,9 +342,9 @@ module Redmics
       start_date, due_date = version_period(version)
       return [] if start_date.nil? || due_date.nil?
       event = Icalendar::Event.new
-      event.dtstart         start_date, {'VALUE' => 'DATE'}
-      event.dtend           due_date + 1, {'VALUE' => 'DATE'}
-      event.uid             "id:redmics:project:#{version.project_id}:version:#{version.id}@#{Setting.host_name}"
+      event.dtstart = Icalendar::Values::Date.new(start_date)
+      event.dtend = Icalendar::Values::Date.new(due_date + 1)
+      event.uid = "id:redmics:project:#{version.project_id}:version:#{version.id}@#{Setting.host_name}"
       return [event]
     end
 
@@ -352,9 +352,9 @@ module Redmics
       due_date = version_period(version)[1]
       return [] if due_date.nil?
       event = Icalendar::Event.new
-      event.dtstart         due_date, {'VALUE' => 'DATE'}
-      event.dtend           due_date + 1, {'VALUE' => 'DATE'}
-      event.uid             "id:redmics:project:#{version.project_id}:version:#{version.id}@#{Setting.host_name}"
+      event.dtstart = Icalendar::Values::Date.new(due_date)
+      event.dtend = Icalendar::Values::Date.new(due_date + 1)
+      event.uid = "id:redmics:project:#{version.project_id}:version:#{version.id}@#{Setting.host_name}"
       return [event]
     end
 
@@ -364,27 +364,27 @@ module Redmics
         return []
       elsif start_date == due_date
         event = Icalendar::Event.new
-        event.dtstart       start_date, {'VALUE' => 'DATE'}
-        event.dtend         start_date + 1, {'VALUE' => 'DATE'}
-        event.summary       "<#> #{l(:label_version)} #{version.name}"
-        event.uid           "id:redmics:project:#{version.project_id}:version:#{version.id}@#{Setting.host_name}"
+        event.dtstart = Icalendar::Values::Date.new(start_date)
+        event.dtend = Icalendar::Values::Date.new(start_date + 1)
+        event.summary = "<#> #{l(:label_version)} #{version.name}"
+        event.uid = "id:redmics:project:#{version.project_id}:version:#{version.id}@#{Setting.host_name}"
         return [event]
       end
       result = []
       unless start_date.nil?
         event = Icalendar::Event.new
-        event.dtstart       start_date, {'VALUE' => 'DATE'}
-        event.dtend         start_date + 1, {'VALUE' => 'DATE'}
-        event.summary       ">> #{l(:label_version)} #{version.name}"
-        event.uid           "id:redmics:project:#{version.project_id}:version:#{version.id}:s@#{Setting.host_name}"
+        event.dtstart = Icalendar::Values::Date.new(start_date)
+        event.dtend = Icalendar::Values::Date.new(start_date + 1)
+        event.summary = ">> #{l(:label_version)} #{version.name}"
+        event.uid = "id:redmics:project:#{version.project_id}:version:#{version.id}:s@#{Setting.host_name}"
         result << event
       end
       unless due_date.nil?
         event = Icalendar::Event.new
-        event.dtstart       due_date, {'VALUE' => 'DATE'}
-        event.dtend         due_date + 1, {'VALUE' => 'DATE'}
-        event.summary       "<< #{l(:label_version)} #{version.name}"
-        event.uid           "id:redmics:project:#{version.project_id}:version:#{version.id}:e@#{Setting.host_name}"
+        event.dtstart = Icalendar::Values::Date.new(due_date)
+        event.dtend = Icalendar::Values::Date.new(due_date + 1)
+        event.summary = "<< #{l(:label_version)} #{version.name}"
+        event.uid = "id:redmics:project:#{version.project_id}:version:#{version.id}:e@#{Setting.host_name}"
         result << event
       end
       return result
@@ -394,43 +394,43 @@ module Redmics
       start_date, due_date = version_period(version)
       todo = Icalendar::Todo.new
       unless start_date.nil?
-        todo.dtstart        start_date, {'VALUE' => 'DATE'}
+        todo.dtstart = Icalendar::Values::Date.new(start_date)
       end
       unless due_date.nil?
-        todo.due            due_date, {'VALUE' => 'DATE'}
+        todo.due = Icalendar::Values::Date.new(due_date)
       end
-      todo.uid              "id:redmics:project:#{version.project_id}:version:#{version.id}@#{Setting.host_name}"
+      todo.uid = "id:redmics:project:#{version.project_id}:version:#{version.id}@#{Setting.host_name}"
       return [todo]
     end
 
     def apply_version_common_properties(version, result)
       result.each { |event|
-        event.summary       "#{@controller.l(:label_version)} #{version.name}" unless event.summary
-        event.created       version.created_on.to_date, {'VALUE' => 'DATE'}
-        event.last_modified version.updated_on.to_datetime unless version.updated_on.nil?
-        event.description   version.description unless version.description.nil?
-        event.add_category  @controller.l(:label_version).upcase
-        event.url           @controller.url_for(:controller => 'versions', :action => 'show', :id => version.id)
+        event.summary = "#{@controller.l(:label_version)} #{version.name}" unless event.summary
+        event.created = Icalendar::Values::Date.new(version.created_on)
+        event.last_modified = version.updated_on.to_datetime unless version.updated_on.nil?
+        event.description = version.description unless version.description.nil?
+        event.categories = [@controller.l(:label_version).upcase]
+        event.url = @controller.url_for(:controller => 'versions', :action => 'show', :id => version.id)
         days = (version.updated_on.to_i - version.created_on.to_i) / 86400
-        event.sequence      days
+        event.sequence = days
       }
     end
 
     def apply_version_event_properties(version, result)
       result.each { |event|
-        event.status        "CONFIRMED" unless version.closed?
+        event.status = "CONFIRMED" unless version.closed?
       }
     end
 
     def apply_version_todo_properties(version, result)
       result.each { |todo|
         if version.closed?
-          todo.status       "COMPLETED"
-          todo.completed    version.updated_on.to_datetime
-          todo.percent      100
+          todo.status = "COMPLETED"
+          todo.completed = version.updated_on.to_datetime
+          todo.percent = 100
         else
-          todo.status       "IN-PROCESS"
-          todo.percent      version.completed_percent.to_i
+          todo.status = "IN-PROCESS"
+          todo.percent = version.completed_percent.to_i
         end
       }
     end
@@ -441,17 +441,17 @@ module Redmics
         when :plain
           # no action
         when :status
-          item.summary      "#{item.summary} (#{issue.status.name})" if issue.status
+          item.summary = "#{item.summary} (#{issue.status.name})" if issue.status
         when :ticket_number_and_status
-          item.summary      "#{item.summary} (#{issue.status.name})" if issue.status
+          item.summary = "#{item.summary} (#{issue.status.name})" if issue.status
           if item.summary =~ /(<|>|<>) (.*)/
             m = Regexp.last_match
-            item.summary    "#{m[1]} #{issue.tracker} ##{issue.id}: #{m[2]}"
+            item.summary = "#{m[1]} #{issue.tracker} ##{issue.id}: #{m[2]}"
           else
-            item.summary    "#{issue.tracker} ##{issue.id}: #{item.summary}"
+            item.summary = "#{issue.tracker} ##{issue.id}: #{item.summary}"
           end
         else
-          raise "Unknown summary_strategy: '#{@summary_strategy}.'"
+          raise "Unknown summary_strategy: '#{@summary_strategy}'."
         end
       }
     end
@@ -467,9 +467,9 @@ module Redmics
           header << "#{@controller.l(:field_project)}: #{issue.project.name}" if issue.project
           header << "#{@controller.l(:field_fixed_version)}: #{issue.fixed_version}" if issue.fixed_version
           if item.description
-            item.description header.join("\n") + "\n\n" + item.description
+            item.description = header.join("\n") + "\n\n" + item.description
           else
-            item.description header.join("\n")
+            item.description = header.join("\n")
           end
         when :full_no_url
           header = []
@@ -482,9 +482,9 @@ module Redmics
           header << "#{@controller.l(:field_category)}: #{issue.category.name}" if issue.category
           header << "#{@controller.l(:field_fixed_version)}: #{issue.fixed_version}" if issue.fixed_version
           if item.description
-            item.description header.join("\n") + "\n\n" + item.description
+            item.description = header.join("\n") + "\n\n" + item.description
           else
-            item.description header.join("\n")
+            item.description = header.join("\n")
           end
         when :full
           header = []
@@ -497,12 +497,12 @@ module Redmics
           header << "#{@controller.l(:field_category)}: #{issue.category.name}" if issue.category
           header << "#{@controller.l(:field_fixed_version)}: #{issue.fixed_version}" if issue.fixed_version
           if item.description
-            item.description header.join("\n") + "\n\n" + item.description
+            item.description = header.join("\n") + "\n\n" + item.description
           else
-            item.description header.join("\n")
+            item.description = header.join("\n")
           end
         else
-          raise "Unknown description_strategy: '#{@description_strategy}.'"
+          raise "Unknown description_strategy: '#{@description_strategy}'."
         end
       }
     end
@@ -512,13 +512,13 @@ module Redmics
         case @description_strategy
         when :plain
           # no action
-        when :url
+        when :url_and_version
           header = []
           header << "#{@controller.l(:field_url)}: #{item.url}"
           if item.description
-            item.description header.join("\n") + "\n\n" + item.description
+            item.description = header.join("\n") + "\n\n" + item.description
           else
-            item.description header.join("\n")
+            item.description = header.join("\n")
           end
         when :full_no_url
           header = []
@@ -526,9 +526,9 @@ module Redmics
           header << "#{@controller.l(:field_project)}: #{version.project.name}" if version.project
           header << "#{@controller.l(:field_status)}: #{version.status}" if version.status
           if item.description
-            item.description header.join("\n") + "\n\n" + item.description
+            item.description = header.join("\n") + "\n\n" + item.description
           else
-            item.description header.join("\n")
+            item.description = header.join("\n")
           end
         when :full
           header = []
@@ -536,12 +536,12 @@ module Redmics
           header << "#{@controller.l(:field_project)}: #{version.project.name}" if version.project
           header << "#{@controller.l(:field_status)}: #{version.status}" if version.status
           if item.description
-            item.description header.join("\n") + "\n\n" + item.description
+            item.description = header.join("\n") + "\n\n" + item.description
           else
-            item.description header.join("\n")
+            item.description = header.join("\n")
           end
         else
-          raise "Unknown description_strategy: '#{@description_strategy}.'"
+          raise "Unknown description_strategy: '#{@description_strategy}'."
         end
       }
     end

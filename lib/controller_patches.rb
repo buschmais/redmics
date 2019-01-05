@@ -20,19 +20,14 @@ module ApplicationControllerFindCurrentUserICS
   module PrependMethods
     def find_current_user
       find_current_user_with_ics
-      super
     end
   end
 
   def self.included(base)
     base.class_eval {
       include InstanceMethods
-      if self.respond_to?(:alias_method_chain)
-        alias_method_chain :find_current_user, :ics
-      else
-        alias_method :find_current_user_without_ics, :find_current_user
-        prepend PrependMethods
-      end
+      alias_method :find_current_user_without_ics, :find_current_user
+      prepend PrependMethods
     }
   end
 
@@ -42,7 +37,7 @@ module ApplicationControllerFindCurrentUserICS
       result = find_current_user_without_ics
       return result if result
       if params[:format] == 'ics' && params[:key] && request.get? && accept_rss_auth?
-        User.find_by_rss_key(params[:key])
+        return User.find_by_rss_key(params[:key])
       end
     end
   end
@@ -59,12 +54,8 @@ module SettingsControllerPluginDefaults
   def self.included(base)
     base.class_eval {
       include InstanceMethods
-      if self.respond_to?(:alias_method_chain)
-        alias_method_chain :plugin, :defaults
-      else
-        alias_method :plugin_without_defaults, :plugin
-        prepend PrependMethods
-      end
+      alias_method :plugin_without_defaults, :plugin
+      prepend PrependMethods
     }
   end
 

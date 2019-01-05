@@ -1,5 +1,10 @@
 = redmine_ics_export (redmics) change-log
 
+== 4.0.0 (dev)
+ * Compatibility with Redmine 4.0
+ * Rails 5 support (Kudos to alxwr)
+ * Update to icalendar 2.5
+
 == 3.0.1 (dev)
  * make queries compatible again to current head of Redmine
  * experimental support for alarms

@@ -18,6 +18,6 @@
 class UserPrefsHooks < Redmine::Hook::ViewListener
   
   render_on :view_my_account_contextual, 
-            :inline => "| <%= link_to(l(:label_redmics_settings_userprefs), :action => 'redmics_settings') %>"
+            :inline => "<%= link_to(l(:label_redmics_settings_userprefs), {:action => 'redmics_settings'}, :class => 'icon', :style => 'background-image: url(../images/calendar.png)') %>"
 
 end
