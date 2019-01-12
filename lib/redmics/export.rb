@@ -300,8 +300,9 @@ module Redmics
         event.last_modified = issue.updated_on.to_datetime unless issue.updated_on.nil?
         event.description = issue.description unless issue.description.nil?
         event.categories = [@controller.l(:label_issue).upcase]
-        event.contact = %w(issue.assigned_to.name, {"ALTREP" => issue.assigned_to.mail}) unless issue.assigned_to.nil?
-        event.organizer = "mailto:#{issue.author.mail}", {"CN" => issue.author.name}
+        event.contact = Icalendar::Values::Text.new(issue.assigned_to.name, 
+          {"ALTREP" => "mailto:#{issue.assigned_to.mail}"}) unless issue.assigned_to.nil?
+        event.organizer = Icalendar::Values::CalAddress.new("mailto:#{issue.author.mail}", cn: issue.author.name)
         event.url = @controller.url_for(:controller => 'issues', :action => 'show', :id => issue.id)
         event.sequence = issue.lock_version
       }

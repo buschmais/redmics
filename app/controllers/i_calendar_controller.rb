@@ -24,16 +24,13 @@ class ICalendarController < ApplicationController
   
   accept_rss_auth :index
 
-  before_method = self.respond_to?(:before_filter) ? :before_filter : :before_action
-  send(before_method,
-                :find_user,
+  before_action :find_user,
                 :find_optional_project,
                 :find_optional_query,
                 :decode_rendering_settings_from_url,
                 :authorize_access, 
                 :check_and_complete_params,
                 :load_settings
-      )
   
   def index
     e = Redmics::Export.new(self)
