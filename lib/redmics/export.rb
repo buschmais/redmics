@@ -39,8 +39,8 @@ module Redmics
     end
 
     def icalendar
-      issues_rederer = create_issues_rederer @issue_strategy
-      versions_rederer = create_versions_rederer @version_strategy
+      issues_renderer = create_issues_renderer @issue_strategy
+      versions_renderer = create_versions_renderer @version_strategy
 
       if @query
         (issues, versions) = redmine_query
@@ -49,8 +49,8 @@ module Redmics
       end
 
       events = []
-      events += issues.collect(&issues_rederer).flatten
-      events += versions.collect(&versions_rederer).flatten
+      events += issues.collect(&issues_renderer).flatten
+      events += versions.collect(&versions_renderer).flatten
 
       cal = Icalendar::Calendar.new
       cal.publish
@@ -136,7 +136,7 @@ module Redmics
       return [issues, versions]
     end
 
-    def create_issues_rederer(type)
+    def create_issues_renderer(type)
       case type
       when :none
         lambda { |issue|
@@ -185,7 +185,7 @@ module Redmics
       end
     end
 
-    def create_versions_rederer(type)
+    def create_versions_renderer(type)
       case type
       when :none
         lambda { |version|
@@ -329,10 +329,10 @@ module Redmics
         if issue.closed?
           todo.status = "COMPLETED"
           todo.completed = issue.updated_on.to_datetime
-          todo.percent = 100
+          todo.percent_complete = 100
         elsif issue.assigned_to
           todo.status = "IN-PROCESS"
-          todo.percent = issue.done_ratio ? issue.done_ratio.to_i : 0
+          todo.percent_complete = issue.done_ratio ? issue.done_ratio.to_i : 0
         else
           todo.status = "NEEDS-ACTION"
         end
@@ -428,10 +428,10 @@ module Redmics
         if version.closed?
           todo.status = "COMPLETED"
           todo.completed = version.updated_on.to_datetime
-          todo.percent = 100
+          todo.percent_complete = 100
         else
           todo.status = "IN-PROCESS"
-          todo.percent = version.completed_percent.to_i
+          todo.percent_complete = version.completed_percent.to_i
         end
       }
     end
