@@ -1,6 +1,7 @@
 = redmine_ics_export (redmics)
 
 Plug-in for Redmine (http://www.redmine.org/) to export project issues and versions as ICalendar (ICS) files.
+The plug-in also exposes a webcal address for subscription to the ICS calendar view 
 
 This plug-in requires Redmine 4.x.
 
@@ -27,3 +28,15 @@ This is not supported and may cause issues with your Redmine installation.
 == Older Redmine version
 
 Please checkout branches +redmine_2+ or +redmine_3+ for the corresponding Redmine version.
+
+
+== Using redmics
+
+The plugin redmics exposes an ICS calendar view of your Redmine issues at a specific webcal address. The webcal address can be used to subscribe to the ICS calendar from other applications. 
+For example, to subscribe to an ICS webcal with Mozilla Thunderbird 78.3.1, do the following:
+
+1. Log-in to your Redmine user account
+2. In Redmine, go to "Projects" -> "Gantt". In the ICal sidebar, left-click on one of the options to get the webcal address displayed in the address bar of the web browser.
+3. Run Mozilla Thunderbird
+4. In Mozilla Thunderbird, open the calendar tab (main menu -> "Events and Tasks").
+5. In the left side panel, left-click on the button with a plus symbol icon ("New calendar…"). Select source: "Network" -> "Next". Select format: iCalendar (ICS). In the address field, enter +webcal://<webcal-address>+ (replace the placeholder +<webcal-address>+ with the webcal address from step 2). Left-click "Next". Enter a calendar name.
