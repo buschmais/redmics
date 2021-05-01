@@ -1,29 +1,29 @@
 # Modern Greek strings go here
 el:
   label_icalendar_header: ICalendar
-  label_issues_mine: My issues
-  label_issues_assigned: Assigned issues
-  label_issues_all: All issues
-  label_issues_open_only: open only
-  toolip_icalendar_link: Copy the link location for use in your favorite ical-application.
-  label_settings_rendering_header: Render options
-  label_settings_rendering_issues: Issue rendering as
-  label_settings_rendering_versions: Version rendering as
-  option_settings_rendering_none: skip rendering
-  option_settings_rendering_vevent_full_span: full time event
-  option_settings_rendering_vevent_end_date: all-day event for just the end date
-  option_settings_rendering_vevent_start_and_end_date: all-day event for start and end date
-  option_settings_rendering_vtodo: todo item
-  text_settings_rendering_more_information: For more information see
-  label_redmics_settings_userprefs: ICS export
-  notice_redmics_userprefs_updated: ICS export settings have been updated sucessfully
-  notice_redmics_userprefs_reset: ICS export settings have been reset
-  label_settings_enhance_summary: Enhance summary with
-  option_settings_enhance_summary_plain: keep as is
-  option_settings_enhance_summary_status: status
-  option_settings_enhance_summary_ticket_number_and_status: ticket number and status
-  label_settings_enhance_description: Enhance description with
-  option_settings_enhance_description_plain: keep as is
-  option_settings_enhance_description_url_and_version: URL and version
-  option_settings_enhance_description_full_no_url: all available information without URL
-  option_settings_enhance_description_full: all available information
+  label_issues_mine: Τα θέματα μου
+  label_issues_assigned: Θέματα που ανέθεσα
+  label_issues_all: Όλα τα θέματα
+  label_issues_open_only: μόνο ανοικτά
+  toolip_icalendar_link: Αντιγραφή του συνδέσμου για χρήση στην αγαπημένη σας εφαρμογή iCal.
+  label_settings_rendering_header: Ιδιότητες εμφάνισης
+  label_settings_rendering_issues: Εμφάνιση Θέματος ως
+  label_settings_rendering_versions: Εμφάνιση Έκδοσης ως
+  option_settings_rendering_none: παράλειψη εμφάνισης
+  option_settings_rendering_vevent_full_span: Συμβάν πλήρους χρόνου
+  option_settings_rendering_vevent_end_date: Ολοήμερο συμβάν μόνο για την ημέρομηνία προθεσμίας
+  option_settings_rendering_vevent_start_and_end_date: Ολοήμερο συμβάν για την ημέρομηνία εκκίνησης και προθεσμίας.
+  option_settings_rendering_vtodo: αντικείμενο todo
+  text_settings_rendering_more_information: Για περισσότερες πληροφορίες δες
+  label_redmics_settings_userprefs: ICS εξαγωγή
+  notice_redmics_userprefs_updated: Ρυθμίσεις ICS εξαγωγής έχουν ενημερωθεί επιτυχώς
+  notice_redmics_userprefs_reset: Ρυθμίσεις ICS εξαγωγής έχουν μηδενιστεί
+  label_settings_enhance_summary: Βελτιώστε την περίληψη με
+  option_settings_enhance_summary_plain: διατηρείστε ως έχει
+  option_settings_enhance_summary_status: κατάσταση
+  option_settings_enhance_summary_ticket_number_and_status: αριθμός θέματος και κατάσταση
+  label_settings_enhance_description: Βελτιώστε την περιγραφή με
+  option_settings_enhance_description_plain: διατηρείστε ως έχει
+  option_settings_enhance_description_url_and_version: URL και έκδοση
+  option_settings_enhance_description_full_no_url: όλη η διαθέσιμη πληροφορία χωρίς URL
+  option_settings_enhance_description_full: όλη η διαθέσιμη πληροφορία
