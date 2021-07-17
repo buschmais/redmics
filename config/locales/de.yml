@@ -1,6 +1,6 @@
 # German strings go here
 de:
-  label_icalendar_header: ICalendar
+  label_icalendar_header: Kalender Abo
   label_issues_mine: Meine Tickets
   label_issues_assigned: Zugewiesene Tickets
   label_issues_all: Alle Tickets
