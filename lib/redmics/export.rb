@@ -445,7 +445,7 @@ module Redmics
           item.summary = "#{item.summary} (#{issue.status.name})" if issue.status
         when :ticket_number_and_status
           item.summary = "#{item.summary} (#{issue.status.name})" if issue.status
-          if item.summary =~ /(<|>|<>) (.*)/
+          if /(<|>|<>) (.*)/ =~ item.summary
             m = Regexp.last_match
             item.summary = "#{m[1]} #{issue.tracker} ##{issue.id}: #{m[2]}"
           else
