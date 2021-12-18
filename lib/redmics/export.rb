@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2011  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2011-2021 Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -182,6 +182,16 @@ module Redmics
           enhance_issue_description(issue, result)
           result
         }
+      when :mega_calendar
+        lambda { |issue|
+          result = create_issue_vevent_mega_calendar(issue)
+          apply_issue_common_properties(issue, result)
+          apply_issue_event_properties(issue, result)
+          apply_issue_alarm(issue, result) unless @alarm.nil?
+          enhance_issue_summary(issue, result)
+          enhance_issue_description(issue, result)
+          result
+        }
       end
     end
 
@@ -290,6 +300,16 @@ module Redmics
       end
       todo.uid = "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
       return [todo]
+    end
+
+    def create_issue_vevent_mega_calendar(issue)
+      start_date_time, due_date_time = mega_calendar_issue_period(issue)
+      return [] if start_date_time.nil? || due_date_time.nil?
+      event = Icalendar::Event.new
+      event.dtstart = Icalendar::Values::DateTime.new(start_date_time)
+      event.dtend = Icalendar::Values::DateTime.new(due_date_time)
+      event.uid = "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
+      return [event]
     end
 
     def apply_issue_common_properties(issue, result)
@@ -551,6 +571,18 @@ module Redmics
       start_date = issue.start_date || (issue.fixed_version.start_date unless issue.fixed_version.nil?)
       due_date = issue.due_date || (issue.fixed_version.due_date unless issue.fixed_version.nil?)
       return [start_date, due_date]
+    end
+
+    def mega_calendar_issue_period(issue)
+      ticket_time = TicketTime.where(:issue_id => issue.id).first rescue nil
+      ticket_time_begin = ticket_time.time_begin.strftime(" %H:%M") rescue ' 00:00'
+      ticket_time_end = ticket_time.time_end.strftime(" %H:%M") rescue ' 24:00'
+      start_date = issue.start_date
+      due_date = issue.due_date
+      return [
+        (Time.parse(start_date.to_s + ticket_time_begin) unless start_date.nil?),
+        (Time.parse(due_date.to_s + ticket_time_end) unless due_date.nil?)
+      ]
     end
 
     def version_period(version)

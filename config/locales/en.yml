@@ -14,6 +14,7 @@ en:
   option_settings_rendering_vevent_end_date: all-day event for just the end date
   option_settings_rendering_vevent_start_and_end_date: all-day event for start and end date
   option_settings_rendering_vtodo: todo item
+  option_settings_rendering_mega_calendar: partial day Mega Calendar event
   text_settings_rendering_more_information: For more information see
   label_redmics_settings_userprefs: ICS export
   notice_redmics_userprefs_updated: ICS export settings have been updated sucessfully

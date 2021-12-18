@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2010-2012 Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2010-2021 Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -73,11 +73,11 @@ private
   end
 
   def decode_rendering_settings_from_url
-    options = [:none, :vevent_full_span, :vevent_end_date, :vevent_start_and_end_date, :vtodo]
+    options = [:none, :vevent_full_span, :vevent_end_date, :vevent_start_and_end_date, :vtodo, :mega_calendar]
     options_summary = [:plain, :status, :ticket_number_and_status]
     options_description = [:plain, :url_and_version, :full_no_url, :full]
     @rendering = {}
-    if params[:render_issues] =~ /[0-4]/
+    if params[:render_issues] =~ /[0-5]/
       @rendering[:redmics_icsrender_issues] = options[params[:render_issues].to_i]
     end
     if params[:render_versions] =~ /[0-3]/

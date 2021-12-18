@@ -1,11 +1,19 @@
-<%# redmics - redmine ics export plugin, Copyright (c) 2010-2011 Frank Schwarz, frank.schwarz@buschmais.com %>
+<%# redmics - redmine ics export plugin, Copyright (c) 2010-2021 Frank Schwarz, frank.schwarz@buschmais.com %>
 <%
-  options = ActiveSupport::OrderedHash.new
-  options[l(:option_settings_rendering_none)] = :none
-  options[l(:option_settings_rendering_vevent_full_span)] = :vevent_full_span
-  options[l(:option_settings_rendering_vevent_end_date)] = :vevent_end_date
-  options[l(:option_settings_rendering_vevent_start_and_end_date)] = :vevent_start_and_end_date
-  options[l(:option_settings_rendering_vtodo)] = :vtodo
+  event_options = ActiveSupport::OrderedHash.new
+  event_options[l(:option_settings_rendering_none)] = :none
+  event_options[l(:option_settings_rendering_vevent_full_span)] = :vevent_full_span
+  event_options[l(:option_settings_rendering_vevent_end_date)] = :vevent_end_date
+  event_options[l(:option_settings_rendering_vevent_start_and_end_date)] = :vevent_start_and_end_date
+  event_options[l(:option_settings_rendering_vtodo)] = :vtodo
+  event_options[l(:option_settings_rendering_mega_calendar)] = :mega_calendar if defined?(TicketTime) == 'constant' && TicketTime.class == Class
+
+  version_options = ActiveSupport::OrderedHash.new
+  version_options[l(:option_settings_rendering_none)] = :none
+  version_options[l(:option_settings_rendering_vevent_full_span)] = :vevent_full_span
+  version_options[l(:option_settings_rendering_vevent_end_date)] = :vevent_end_date
+  version_options[l(:option_settings_rendering_vevent_start_and_end_date)] = :vevent_start_and_end_date
+  version_options[l(:option_settings_rendering_vtodo)] = :vtodo
 
   summary_options = ActiveSupport::OrderedHash.new
   summary_options[l(:option_settings_enhance_summary_plain)] = :plain
@@ -21,11 +29,11 @@
 <h3><%= l(:label_settings_rendering_header) %></h3>
 <p>
   <%= content_tag :label, l(:label_settings_rendering_issues) + ':' %>
-  <%= select_tag 'settings[redmics_icsrender_issues]', options_for_select(options, @settings[:redmics_icsrender_issues].to_sym) %>
+  <%= select_tag 'settings[redmics_icsrender_issues]', options_for_select(event_options, @settings[:redmics_icsrender_issues].to_sym) %>
 </p>
 <p>
   <%= content_tag :label, l(:label_settings_rendering_versions) + ':' %>
-  <%= select_tag 'settings[redmics_icsrender_versions]', options_for_select(options, @settings[:redmics_icsrender_versions].to_sym) %><br/>
+  <%= select_tag 'settings[redmics_icsrender_versions]', options_for_select(version_options, @settings[:redmics_icsrender_versions].to_sym) %><br/>
 </p>
 <p>
   <%= content_tag :label, l(:label_settings_enhance_summary) + ':' %>
