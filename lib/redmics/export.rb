@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2011  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2011-2022  Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -49,8 +49,8 @@ module Redmics
       end
 
       events = []
-      events += issues.collect(&issues_renderer).flatten
-      events += versions.collect(&versions_renderer).flatten
+      events += issues.collect(&issues_renderer).to_a.flatten
+      events += versions.collect(&versions_renderer).to_a.flatten
 
       cal = Icalendar::Calendar.new
       cal.publish

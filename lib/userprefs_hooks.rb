@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class UserPrefsHooks < Redmine::Hook::ViewListener
+class UserprefsHooks < Redmine::Hook::ViewListener
   
   render_on :view_my_account_contextual, 
             :inline => "<%= link_to(l(:label_redmics_settings_userprefs), {:action => 'redmics_settings'}, :class => 'icon', :style => 'background-image: url(../images/calendar.png)') %>"

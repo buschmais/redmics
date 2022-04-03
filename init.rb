@@ -17,17 +17,18 @@
 
 require 'redmine'
 
-require 'sidebar_hooks'
-require 'userprefs_hooks'
-require 'model_patches'
-require 'controller_patches'
-require 'my_controller_patches'
+require_relative './lib/sidebar_hooks'
+require_relative './lib/userprefs_hooks'
+require_relative './lib/application_controller_patches'
+require_relative './lib/settings_controller_patches'
+require_relative './lib/model_patches'
+require_relative './lib/my_controller_patches'
 
 Redmine::Plugin.register :redmine_ics_export do
   name 'redmine ics export plugin (aka redmics)'
   author 'Frank Schwarz'
   description 'ICalendar view of issue- and version-deadlines'
-  version '4.0.1.dev'
+  version '5.0.0.dev'
   url 'https://github.com/buschmais/redmics'
   author_url 'http://www.buschmais.de/author/frank/'
   settings(

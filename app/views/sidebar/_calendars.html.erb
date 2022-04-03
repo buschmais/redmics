@@ -5,17 +5,17 @@
 <% if user.allowed_to?(:view_calendar, project, :global => true) %>
   <h3><%= l(:label_icalendar_header) %></h3>
   <% unless user.anonymous? %>
-  <%= link_to l(:label_issues_mine), { :controller => 'i_calendar', :assignment => :my, :action => 'index', :project_id => project, :key => user.rss_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>
-  (<%= link_to l(:label_issues_open_only), { :controller => 'i_calendar', :assignment => :my, :status => 'open', :action => 'index', :project_id => project, :key => user.rss_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>)
+  <%= link_to l(:label_issues_mine), { :controller => 'i_calendar', :assignment => :my, :action => 'index', :project_id => project, :key => user.atom_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>
+  (<%= link_to l(:label_issues_open_only), { :controller => 'i_calendar', :assignment => :my, :status => 'open', :action => 'index', :project_id => project, :key => user.atom_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>)
   <br/>
   <% end %>
-  <%= link_to l(:label_issues_assigned), { :controller => 'i_calendar', :assignment => :assigned, :action => 'index', :project_id => project, :key => user.rss_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>
-  (<%= link_to l(:label_issues_open_only), { :controller => 'i_calendar', :assignment => :assigned, :status => 'open', :action => 'index', :project_id => project, :key => user.rss_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>)
+  <%= link_to l(:label_issues_assigned), { :controller => 'i_calendar', :assignment => :assigned, :action => 'index', :project_id => project, :key => user.atom_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>
+  (<%= link_to l(:label_issues_open_only), { :controller => 'i_calendar', :assignment => :assigned, :status => 'open', :action => 'index', :project_id => project, :key => user.atom_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>)
   <br/>
-  <%= link_to l(:label_issues_all), { :controller => 'i_calendar', :assignment => :all, :action => 'index', :project_id => project, :key => user.rss_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>
-  (<%= link_to l(:label_issues_open_only), { :controller => 'i_calendar', :assignment => :all, :status => 'open', :action => 'index', :project_id => project, :key => user.rss_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>)
+  <%= link_to l(:label_issues_all), { :controller => 'i_calendar', :assignment => :all, :action => 'index', :project_id => project, :key => user.atom_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>
+  (<%= link_to l(:label_issues_open_only), { :controller => 'i_calendar', :assignment => :all, :status => 'open', :action => 'index', :project_id => project, :key => user.atom_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>)
   <% if @query && @query.id %>
   <br/>
-  <%= link_to @query.name, { :controller => 'i_calendar', :query_id => @query.id, :action => 'index', :project_id => project, :key => user.rss_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>
+  <%= link_to @query.name, { :controller => 'i_calendar', :query_id => @query.id, :action => 'index', :project_id => project, :key => user.atom_key, :format => 'ics' }, :title => l(:toolip_icalendar_link) %>
   <% end  %>
 <% end %>

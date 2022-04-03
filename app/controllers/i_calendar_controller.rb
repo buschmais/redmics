@@ -22,7 +22,7 @@ require_relative '../../lib/redmics/query_conditions'
 class ICalendarController < ApplicationController
   unloadable
   
-  accept_rss_auth :index
+  accept_atom_auth :index
 
   before_action :find_user,
                 :find_optional_project,

@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-module ApplicationControllerFindCurrentUserICS
+module ApplicationControllerPatches
 
   module PrependMethods
     def find_current_user
@@ -43,38 +43,4 @@ module ApplicationControllerFindCurrentUserICS
   end
 end
 
-module SettingsControllerPluginDefaults
-
-  module PrependMethods
-    def plugin
-      plugin_with_defaults
-    end
-  end
-
-  def self.included(base)
-    base.class_eval {
-      include InstanceMethods
-      alias_method :plugin_without_defaults, :plugin
-      prepend PrependMethods
-    }
-  end
-
-  module InstanceMethods
-    # add default settings if missing
-    def plugin_with_defaults
-      result = plugin_without_defaults
-      # filter for our own plugin
-      return result unless @plugin
-      return result unless @plugin.id == :redmine_ics_export
-      return result unless @settings
-      # add all missing defaults
-      @plugin.settings[:default].each { |key, value|
-        @settings[key] = value unless @settings[key]
-      }
-      return result
-    end
-  end
-end
-
-SettingsController.send(:include, SettingsControllerPluginDefaults)
-ApplicationController.send(:include, ApplicationControllerFindCurrentUserICS)
+ApplicationController.send(:include, ApplicationControllerPatches)
