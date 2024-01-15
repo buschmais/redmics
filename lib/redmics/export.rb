@@ -103,9 +103,7 @@ module Redmics
           raise "Unknown assignment: '#{@assignment}.'"
         end
 
-        @query = IssueQuery.new(:name => "_")
-        @query.project = @project
-        @query.filters = nil
+        @query = IssueQuery.new(:project => @project, :name => "_")
         issues = []
         versions = []
 
