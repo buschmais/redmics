@@ -2,53 +2,53 @@
 
 == 6.0.0 (dev)
 
- * Compatibility with Redmine 6.0
+* Compatibility with Redmine 6.0
 
 == 5.0.0 (dev)
 
- * Compatibility with Redmine 5.0
- * Update to icalendar 2.7
+* Compatibility with Redmine 5.0
+* Update to icalendar 2.7
 
 == 4.0.0 (dev)
 
- * Compatibility with Redmine 4.0
- * Rails 5 support (Kudos to alxwr)
- * Update to icalendar 2.5
+* Compatibility with Redmine 4.0
+* Rails 5 support (Kudos to alxwr)
+* Update to icalendar 2.5
 
 == 3.0.1 (dev)
 
- * make queries compatible again to current head of Redmine
- * experimental support for alarms
+* make queries compatible again to current head of Redmine
+* experimental support for alarms
 
 == 3.0.0 (dev)
 
- * Support for custom queries (issue #11)
+* Support for custom queries (issue #11)
 
 == 2.0.0 (dev)
 
- * compatibility with Redmine 2.0.0 (issue #28)
+* compatibility with Redmine 2.0.0 (issue #28)
 
 == 1.3.1
 
- * No route matches ... when viewing all issues (issue #27)
+* No route matches ... when viewing all issues (issue #27)
 
 == 1.3.0
 
- * Basque translation (issue #18)
- * Brazilian Portuguese translation (issue #23)
- * configurable summary and description (issue #11 and #22)
- * make rendering configuration overridable with URL parameters (issue #17)
- * ensuring compatibility to current head of Redmine (issue #24)
- * more restful ICS URLs (issue #26)
+* Basque translation (issue #18)
+* Brazilian Portuguese translation (issue #23)
+* configurable summary and description (issue #11 and #22)
+* make rendering configuration overridable with URL parameters (issue #17)
+* ensuring compatibility to current head of Redmine (issue #24)
+* more restful ICS URLs (issue #26)
 
 This version uses a new URL scheme for the ICS links. Therefore, all icalendar URLs must be updated.
 This version requires Redmine >= 1.4.0. Previous versions are not supported.
 
 == 1.2.0
 
- * more redering options (issue 3, issue 5 and issue 9)
- * personal rendering options (issue 14)
- * declared encoding as UTF-8 (issue 10)
+* more redering options (issue 3, issue 5 and issue 9)
+* personal rendering options (issue 14)
+* declared encoding as UTF-8 (issue 10)
 
 == 1.1.0
 
