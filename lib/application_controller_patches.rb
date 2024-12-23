@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2011-2012  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2011-2024  Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -36,8 +36,8 @@ module ApplicationControllerPatches
     def find_current_user_with_ics
       result = find_current_user_without_ics
       return result if result
-      if params[:format] == 'ics' && params[:key] && request.get? && accept_rss_auth?
-        return User.find_by_rss_key(params[:key])
+      if params[:format] == 'ics' && params[:key] && request.get? && accept_atom_auth?
+        return User.find_by_atom_key(params[:key])
       end
     end
   end

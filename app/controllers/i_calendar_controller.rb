@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2010-2012 Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2010-2024 Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,8 +20,7 @@ require_relative '../../lib/redmics/export'
 require_relative '../../lib/redmics/query_conditions'
 
 class ICalendarController < ApplicationController
-  unloadable
-  
+
   accept_atom_auth :index
 
   before_action :find_user,

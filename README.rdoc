@@ -3,7 +3,7 @@
 Plug-in for Redmine (http://www.redmine.org/) to export project issues and versions as ICalendar (ICS) files.
 The plug-in also exposes a webcal address for subscription to the ICS calendar view 
 
-This plug-in requires Redmine 5.x.
+This plug-in requires Redmine 6.x.
 
 == Licence
 
@@ -11,7 +11,7 @@ GPL v2
 
 == Requirements
 
-This plug-in requires icalendar 2.7 (https://github.com/icalendar/icalendar).
+This plug-in requires icalendar 2.10 (https://github.com/icalendar/icalendar).
 
 == Installation
 
@@ -27,7 +27,7 @@ This is not supported and may cause issues with your Redmine installation.
 
 == Older Redmine version
 
-Please checkout branches +redmine_2+, +redmine_3+, or +redmine_4+ for the corresponding Redmine version.
+Please checkout branches +redmine_2+, +redmine_3+, +redmine_4+, or +redmine_5+ for the corresponding Redmine version.
 
 
 == Using redmics

@@ -1,5 +1,8 @@
 = redmine_ics_export (redmics) change-log
 
+== 6.0.0 (dev)
+ * Compatibility with Redmine 6.0
+
 == 5.0.0 (dev)
  * Compatibility with Redmine 5.0
  * Update to icalendar 2.7

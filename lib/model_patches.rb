@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2011  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2011-2024  Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -22,9 +22,6 @@ module ModelPatches
     def self.included(base)
       base.extend(ClassMethods)
       base.send(:include, InstanceMethods)
-      base.class_eval do
-        unloadable
-      end
     end
 
     module ClassMethods

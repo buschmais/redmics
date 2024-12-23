@@ -18,6 +18,6 @@
 class UserprefsHooks < Redmine::Hook::ViewListener
   
   render_on :view_my_account_contextual, 
-            :inline => "<%= link_to(l(:label_redmics_settings_userprefs), {:action => 'redmics_settings'}, :class => 'icon', :style => 'background-image: url(../images/calendar.png)') %>"
+            :inline => "<%= link_to(sprite_icon('calendar-event', l(:label_redmics_settings_userprefs), :plugin => 'redmine_ics_export'), {:action => 'redmics_settings'}, :class => 'icon') %>"
 
 end
