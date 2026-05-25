@@ -294,7 +294,7 @@ module Redmics
       result.each { |event|
         event.summary = "#{issue.subject}" unless event.summary
         event.priority = map_priority issue.priority.position
-        event.created = Icalendar::Values::Date.new(issue.created_on)
+        event.created = Icalendar::Values::DateTime.new(issue.created_on)
         event.last_modified = issue.updated_on.to_datetime unless issue.updated_on.nil?
         event.description = issue.description unless issue.description.nil?
         event.categories = [@controller.l(:label_issue).upcase]
@@ -405,7 +405,7 @@ module Redmics
     def apply_version_common_properties(version, result)
       result.each { |event|
         event.summary = "#{@controller.l(:label_version)} #{version.name}" unless event.summary
-        event.created = Icalendar::Values::Date.new(version.created_on)
+        event.created = Icalendar::Values::DateTime.new(version.created_on)
         event.last_modified = version.updated_on.to_datetime unless version.updated_on.nil?
         event.description = version.description unless version.description.nil?
         event.categories = [@controller.l(:label_version).upcase]
